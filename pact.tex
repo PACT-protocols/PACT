@@ -2,148 +2,88 @@
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
-\title{{\huge PACT\/}: Open Source {\Huge P\/}rotocols {\Huge A\/}nd Standards \\
-for Mobile {\Huge C\/}ontact {\Huge T\/}racing Applications}
-%\title{CovidSafe: Private Test, Trace, and Timeout}
+%\title{{\Huge PACT\/}: Open Source {\Huge P\/}rotocols %{\Huge A\/}nd Standards \\
+%for Mobile {\Huge C\/}ontact {\Huge T\/}racing %Applications}
+%\title{Privacy-Sensitive Mobile Contact Tracing: Protocols and Standards}
+\title{{\Huge PACT\/}:   {\Huge P\/}rivacy Sensitive Protocols {\Huge A\/}nd Standards\\
+for Mobile {\Huge C\/}ontact {\Huge T\/}racing }
 \date{}
+
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
 
 \begin{document}
 \maketitle
 
-Running unchecked, the death toll of COVID-19 is estimated to be in the 10s of millions or more.  To avoid this, economy killing lockdowns are being imposed as shown in Hubei.  South Korea however managed to deal with an 8000-person outbreak initiated with a super-spreading event (\href{https://www.propublica.org/article/how-south-korea-scaled-coronavirus-testing-while-the-us-fell-dangerously-behind}{Propublica} \href{https://www.sciencemag.org/news/2020/03/coronavirus-cases-have-dropped-sharply-south-korea-whats-secret-its-success}{Science Magazine}) showing that a third strategy consisting of a three link chain works:
+As nations are seeking to circumvent devastating death tolls from COVID-19, many are resorting to \emph{mobile-based, contact tracing technologies}. Harnessing geo-sensing mobile computing technologies
+is an obvious means to dramatically scale up conventional epidemic response strategies
+to do tracking at population scale. However, straightforward and well-intentioned contact tracing applications can invade personal privacy and provide justification for data collection and mass surveillance that are inconsistent with the civil liberties that citizens will and should expect--and demand. To be effective, acceptable, and consistent with expectations for privacy, we must leverage designs and computing advances in privacy and security. And in cases where it is valuable for individuals to share data with others, systems must provide voluntary mechanisms in accordance with ethical principles of personal decision making, disclosure, and consent. We focus here on privacy-sensitive mobile tracing technologies that are designed to mitigate COVID-19, while upholding civil liberties.  We refer to efforts to identify, study, and field  privacy-sensitive technologies, architectures, and protocols in support of mobile tracing as PACT (\emph{P}rivacy sensitive protocols \emph{A}nd standards for mobile \emph{C}ontact \emph{T}racing).
+
+\begin{center}
+\emph{The objective of PACT is to set forth transparent privacy and
+  anonymity standards,\\
+  which permit adoption of mobile contract tracing efforts while upholding civil liberties.}
+\end{center}
+
+We seek to specify a set of protocols and standards that achieve
+these objectives. We also wish to provide a means to support the concurrent use of multiple, mobile contact tracing applications via providing interoperating capabilities that assure consistency with regards to the goals of privacy.
+
+Conventional contact tracing strategies executed by public health organizations operate as follows: Positively tested citizens must (by law) reveal their contact history to public health officers. The public health officers then inform other citizens who have been exposed to the virus based on co-location, via a definition of co-location, supported by look-up or inference about locations. The citizens deemed to have been exposed are then asked to take appropriate action (often to either seek tests or to quarantine
+themselves and be vigilant about symptoms).  
+
+A mobile contact-tracing application seeks to augment the services provided public health offices, by enabling the following capabilities via computing and communications technology:
+
 \begin{itemize}
-\item Test heavily for the virus.  South Korea ran over 20 tests per person found with the virus. 
-\item Trace down the contacts for anyone who tests positive.  South Korea conducted \emph{mobile contact tracing} using telecom information.
-\item Timeout the virus by quarantining contacts until their immune system purges any virus.
+\item \textbf{Efficient interviews:}  If a citizen becomes ill, he or she can use the app to improve the efficiency and completeness of manual contact tracing interviews. Privacy here is maximized by ensuring that all the data remains on the user's device, except for what they voluntarily reveal to healthcare authorities in order to enable contact tracing.
+
+\item \textbf{Narrowcast messages:}  Public health authorities can broadcast
+  custom-tailored messages to specific, relevant subsets of citizens.  For example, the following message might be issued: ``If you visited
+  the X Eldercare Center between March 7th and 10th, please email yy@hhhealth.org''.  Here, it is a citizens voluntary choice to search these messages for what is relevant to them.
+  
+\item \textbf{Privacy-sensitive, distributed alerting:}  The app can enable someone you were near in the last two weeks to warn you that they are now ill, even if you do not know them personally.  Crucially, as with conventional contract tracing done by public health services, the alert mechanism has a \emph{provably} secure implementation so as to ensure that positives cases remain anonymous to the general public, and that the alerts to exposed citizens are informed in a provably secure manner.
 \end{itemize}
-The TTT approach is a conventional epidemic response strategy applied
-at dramatically more scale than before.  Each link in the chain is
-required for success so the use of telecom information is a genuinely
-worrisome precedent.  What if a government decides the opposition
-party is a public health emergency?
 
-Private Test Trace Timeout (PTTT) methods can empower the public and
-health authorities to respond to COVID-19 while avoiding tools
-reusable for oppression.  The key element here is a smartphone app
-which keeps \emph{all} personal data on your phone by default while
-enabling key capabilities:
-\begin{itemize}
-\item Crowd-sourced warnings.  The app can enable someone you were near in the last two weeks to warn you that they are ill, even if you do not know them personally.  This ability is cryptographically secure, retroactively usable, and unspammable. 
-\item Efficient interviews.  If you become ill, you can use the app to improve the efficiency and completeness of manual contact tracing interviews.
-\item Narrowcast messages.  Public health authorities can broadcast messages with very narrow relevance.  For example ``If you visited this nursing home 1-4 days ago, please email x@y.z.''
-\end{itemize}
-Even in areas with a massive outbreak, a weeks-long lockdown can bring the number of new cases per day under control so that CovidSafe PTTT can control the virus until a vaccine is developed.
+Importantly, the smartphone app, by default, keeps \emph{all} personal data on a citizen's phone, while enabling these key capabilities; information is shared via voluntary disclosure actions taken, with the understandings relayed via careful disclosure. 
 
-\section{Privacy Guarantees}
+\emph{From a civil liberties standpoint, the privacy guarantees these protocols ensure are consistent with the disclosures already extant in contract tracing methods done by public health services} (where some information from a positive tested citizen is revealed to other exposed citizens). In short, we seek to empower public health services, while maintaining civil liberties.
+ 
+\section{Protocols and Standards} 
+We now overview these three functionalities.
 
-\section{Implementation}
+\subsection{Contact Tracing Interviews} 
+Contact tracing interviews are laborious and often miss important events due to the limitations of human memory.  Our plan to assist here is to provide information to the end user (and with consent) that can be shared with a healthcare organization which is charged with performing contact tracing interviews.   This is not an exposure of the entire observational log, but rather an extract of the information which is requested in a standard contact tracing interview. We have been working with healthcare teams from Boston and the University of Washington on formats and content of information that are traditionally sought by public health agencies.
+
+\subsection{Narrowcasting}
+
+Healthcare authorities from NYC have informed us that they would love to have the ability to make public service announcements which are highly tailored to a location or to a subset of people who may have been in a certain region during specific periods of time.  This capability can be enabled with a public server supporting (area x time,message) pairs.  Here "area" is a location, a radius (minimum 10 meters), a beginning time and an ending time.  Only announcements from recognized public health authorities are allowed.  
+
+Anyone can manually query the public server to determine if there are messages potentially relevant to them per their locations and dwells at the locations over a period of time. However, simple automation can be extremely helpful as phones can listen in and alert based on filters that are dynamically set up based on privately-held locations and activities. Upon downloading (area x time, message) pairs a phone app (for example) can automatically check whether the message is relevant to the user.  If it is relevant, a message is relayed to the device owner.
+
+The public server supports scoped queries.  In particular, anyone can ask for a set of messages relevant to some region $R$ where $R$ is defined by a latitude/longitude range with messages after some timestamp.  More specific subscriptions can be constructed on the fly based policies that consider region $R$ and privately observed periods of time that an individual has spent in a region. Such scoped queries and messaging services that relay content based on location or on location and periods of time are a convenience to make computation and communication tractable.  The reference implementation uses regions greater in size than typical GeoIP tables.
+
+\subsection{Privacy-sensitive, distributed alerting.} 
+One approach to privacy-sensitive alerting is to perform distributed, community-sourced approach to sharing information. In an example implementation, proximity-detecting signals via Bluetooth or ultrasonics can be harnessed.  If a user is both infected and is willing to warn others who may have been at risk via proximity to the user, then an authorization is given by healthcare authorities so as to warn people at risk.
+
+An example protocol with Bluetooth signals is as follows:
+
+Let $u$ be the information that the Bluetooth device announces to the world.
+
+The phone periodically replaces $u$ with a random number.
+
+The phone scans for Bluetooth devices every minute.  For any bluetooth device it finds with id $d$,the phone stores $V = \mbox{hash}(d,u)$ where hash is a commonly known cryptographically strong hash.
+
+If someone wants to pass a message m to contacts, they upload $R,(V,m)$ for each contact in their log.  Here $R$ is a region as defined for narrowcasting.
+
+The phone periodically scans a public database, downloading tokens $(V_1,m_1), (V_2,m_2),..., (V_n, m_n)$ associated with people who are positive.  For each entry $V$ in the phone’s storage and for each $V_i$, the phone checks whether $V_i=V$ and if so, announce $m$ to the user.
+
+The same public server can support these queries. 
 
 \end{document}
 
-
-
-
-
-It is possible to keep people alive and have an economy in a democracy. 
-
-Running unchecked, the death toll of COVID-19 is estimated to be in
-the millions in the USA1. South Korea provides the best evidence that
-this is avoidable using mobile contact tracing, while maintaining a
-functioning economy;  they dealt with an 8000-person outbreak
-generated by a super-spreading event in a church while avoiding severe
-economically-damaging lockdowns (Propublica Link \& Science Mag Link
-).  Additional evidence is provided by China (outside of Hubei),
-Taiwan, and Singapore, all of which have effectively dealt with
-outbreaks without shutting down their economy.  In addition to South
-Korea’s mobile contact tracing effort2, Singapore has recently
-released a mobile contact tracing app, TraceTogether (Link); Israel
-passed an emergency law permitting the use of mobile data for COVID-19
-contact tracing (Link); the United Kingdom looks also to be developing
-a mobile contact tracing app (Link, Link, and Paper).    
-
- 
-COVID-19 can be addressed by allowing people to become infected,
-resulting in millions of deaths.  Alternatively, the pandemic can be
-addressed by locking down everyone in quarantines, resulting in a
-massive depression, which in itself can be linked to morbidity and
-deaths (cite: there are some economic studies on this).  It can also
-be addressed by enabling more relaxed controls that would better
-sustain the economy and the harnessing of contact tracing.   To date,
-contact tracing has been linked to government services and
-surveillance.  We believe that we must be extremely cautious about
-governments arguing that COVID-19 justifies state-based surveillance.
-There is a risk that authoritarian regimes engage in further
-incursions into personal privacy in the name public health and that
-democracies that have long protected the basic human right of privacy
-would weaken this commitment in light of the pandemic.  We believe
-that the creative application of computing technologies and
-architectures can provide a privacy-preserving methodology for
-testing, tracing, and timeout (TTT).  We refer to the family of
-privacy-preserving TTT as PTTT methods.  Here we describe a specific
-approach to PTTT that we refer to as CovidSafe.  
-
- 
-CovidSafe enhances and automates existing manual contact tracing in a
-manner which preserves privacy and personal autonomy.   Even in areas
-with a massive outbreak, we expect that weeks-long lockdown can be
-used to bring the number of new cases per day under control, then
-CovidSafe can empower TTT to control the virus while keeping the
-economy going until a vaccine and/or more effective critical care
-medicine is developed.    
-
-
-We are currently coordinating with the University of Washington to
-ensure access to validated positive tests; the University of
-Washington is conducting 90\% of COVID19 tests in Washington State
-(Link).   
-
- 
-
- 
-
-To succeed, we need to do three things in a way that is both rapid and scalable: Test aggressively for the virus; Trace the contacts (e.g., with a threshold such as >1% chance of infection); and Timeout these traced contacts through evidence-based public health interventions based on level of exposure (e.g., immediate self-quarantine vs. serial symptom check, Link).   
-
- 
-
-The Test/Trace/Timeout (TTT) approach is only as strong as the weakest link.  Our goal is to support the contact tracing component of this strategy through empowering users to know whether they have been exposed and what to do in a privacy preserving manner that supports population health management at a national scale.  We envision TTT as the ‘backbone’ of a combined response strategy as suggested by the WHO (Link).    
-
-\subsection*{Privacy and Voluntary Disclosure Protocols and Implications}
-
-The system is designed to maintain strong privacy and anonymity
-protections to the user, while utilizing voluntarily disclosed
-information for societal benefits.  The moral, mathematical, and
-engineering responsibilities of the system are to respect a set of
-well specified privacy preserving principles. Importantly, it should
-be emphasized that user data is held by the user, until the user
-voluntarily discloses information. The below outlines the anonymity
-guarantees, which the system is designed to respect.
-
-\textbf{Voluntarily and secure disclosure to help public health
-  services.}  Currently, contact tracers in public health
-organizations interview a positively confirmed person in order to
-determine other exposures in the population, along with accessing
-other high risk situations (e.g. visits to nursing care centers). The
-contract tracer then informs those relevant individuals in the
-population of potential risks. The prototype system securely maintains
-location information (maintained on the users devices), which the user
-may voluntarily disclose only to a public health official, which the
-public health official may use in the interview process.
-
-\textbf{Anonymized disclosure to inform community members of risks.}
-A positively tested user is able to anonymously inform the community
-of any possible exposure. In particular, any participating community
-member will be anonymously informed if they are potentially at risk
-due to being in an exposure event, which has occurred in some
-pre-specified recent time period. All community members will not be
-explicitly informed of anything more than this. Importantly, from a
-precise security perspective, no further private data (including
-identities) will be revealed to public. This is consistent with what
-is provided by public health contact tracing services.
-
-\textbf{Regional support for public health announcements. } The app
-will support a means of mobile communication between public health
-officials and users in a crude geographic region, e.g. so that public
-health officials can broadcast helpful information to users in some
-pre-specified region (e.g. a town). The user can optionally decide to
-share their crude location (e.g. the town they are in) so that they
-can receive up-to-date information from public health services.
