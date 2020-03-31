@@ -3,6 +3,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 \usepackage{enumitem,kantlipsum}
+\usepackage{graphicx, color}
+\newcommand{\TODO}[1]{ {\color{blue} #1 }}
 
 
 \title{{\Huge PACT\/}:   {\Huge P\/}rivacy Sensitive Protocols {\Huge A\/}nd Standards\\
@@ -72,7 +74,7 @@ Narrowcasting is simply a broadacasting mechanistm, and, for "interviews", all t
 \begin{enumerate}[leftmargin=*]
 \item If I am tested positive and I disclose this information, what is revealed to others?
 
-Any other citizen who has been exposed is notified, along with the time at which the exposure occurred at. No other information will be revealed to any other citizens.
+Any other citizen who has been exposed is notified, along with the time at which the exposure occurred at. No other information will be revealed to any other citizens. \TODO{Y:  The only information that is revealed to other citizens is an approximate number of people who have been infected.}
 
 \item If I receive a message that I have been exposed, what is disclosed to the general public? 
  
@@ -80,7 +82,7 @@ The protocol itself will not reveal anything about your identity; specifically, 
 
 \item For the automated tracing procedure, what data is stored on my phone? What data is stored publicly about me?
 
-Each phone will broadcast a signal (using Bluetooth) to other nearby phones. All phones will remember (from the last two weeks) the signals that they send and those signals they receive. These broadcast signals can be thought of as non-identifying random numbers. If someone test positives and choose to disclose this to help others, they will then disclose \emph{only} their broadcasts in the last two weeks. Then other phones can check if they were nearby to determine if they have been exposed. Standard cryptographic procedures can prevent identity theft, which we now discuss.
+Each phone will broadcast a \TODO{Y: random} signal (using Bluetooth) to other nearby phones. All phones will remember (from the last two weeks) the signals that they send and those signals they receive. These broadcast signals can be thought of as non-identifying random numbers. \TODO{Y: It may make sense to emphasize that the signal each phone broadcasts changes every x minutes, so these signals are not only anonymizers, but cannot be linked to any user.}  If someone test positives and choose to disclose this to help others, they will then disclose \emph{only} their broadcasts in the last two weeks. Then other phones can check if they were nearby to determine if they have been exposed. Standard cryptographic procedures can prevent identity theft, which we now discuss.
 
 \end{enumerate}
 
@@ -92,7 +94,7 @@ Each phone will broadcast a signal (using Bluetooth) to other nearby phones. All
 \item If you are negative, can a malicious citizen listen to your phone's broadcasts and misreport you as being a positive?
 %Can a hacker misreport negative individuals as medically confirmed positive?
    
-   No, this is not possible. This is because there are standard cryptographic mechanisms which prevent this. Their security is based on well-studied methods which are used e.g. to secure online banking and other applications. 
+   No, this is not possible. This is because the protocol uses cryptographic mechanisms which prevent this. These protocols are based on well-studied methods, which are also used for other security purposes including online banking.
    % No, this is not possible. This is because there standard cryptographic protocols which prevent this (e.g. related to how online banking works and other secure exchanges). 
 
 
@@ -104,17 +106,26 @@ Each phone will broadcast a signal (using Bluetooth) to other nearby phones. All
 
 \item Can a positive's citizens identity, who chooses to report being positive, be inferred by others? 
 
-Possibly. Note that an individual who was in close proximity to a positive may be able to infer the positive's identity.  However, the positive's identity will never be explicitly broadcast. In fact, identities are not even  stored in the dataset; it is only the positive's random broadcast that are stored.
-%Furthermore, two users who have been in proximity of the same positive can also perhaps jointly identify the positive.
+Possibly. Note that an individual who was in close proximity to a positive may be able to infer the positive's identity.  
+Furthermore, two (or more) users who have been in proximity of the same positive can also perhaps jointly collude to identify the positive.
+However, the positive's identity will never be explicitly broadcast. In fact, identities are not even  stored in the dataset; it is only the positive's random broadcast that are stored.
 It should be noted that preventing proximity based identification of this sort is simply not possible to avoid in any mobile based alerting system. This is because the simple fact that an individual has been alerted to being exposed is information that itself could reveal identifying information.  Preventing such disclosures is simply something is not possible, even under cryptographic procedures.
+
+\item Can a malicious citizen eavesdrop on the bluetooth signals\footnote{The signals we mean here are those signals that broadcast under the mobile tracing protocol.} that my phone is broadcasting publicly (to ping other nearby phones) and then use this information in any way against me or any other citizens?
+
+   No, this is not possible. Your broadcasts look like random numbers (gibberish) to any other users who eavesdrop, so the malicious citizen will only hear random numbers. This is because the protocol uses a cryptographic mechanism that ensures this.  \TODO{SK: Please check! I believe the answer is correct. Also, do we want to include this question?} 
 
 \end{enumerate}
 
-Finally, how does this contrast to other approaches?
 
-\textbf{Surveillance.}
+
+\textbf{Surveillance.} Finally, it is helpful to contrast the goals in PACT to those of other nations.
+
 \begin{enumerate}[leftmargin=*]
-\item How does this contrast to approaches of other governments?
+\item How does PACT contrast to approaches of other governments?
+
+South Korea, Israel, and United Kingdom all have passed emergency laws which permit the state to use any telecommunication information, which gives the state essentially unchecked surveillance powers. These laws set worrisome precedents for privacy and civil liberties. PACT seeks to ensure this does not occur, where this document gives transparent procedures and protocols so that the security and privacy concerns can be upheld for any citizen to examine. Users data is stored on their phone. the In spirit, the privacy guarantees of PACT are designed to be consistent with the disclosures already extant in contract tracing methods done by public health services. 
+
 \end{enumerate}
 
 \section{Protocols and Standards} 
@@ -136,8 +147,8 @@ We assume that $f$ can be instantiated by using an appropriate hash function. Fo
 
 For efficiency reason, we note that the time intervals to advance from $S_{i-1}$ to $S_i$ may be longer than the intervals between Bluetooth broadcasts, in which case the same $\id_i$ is broadcast repeatedly. 
 \item {\bf Pseudorandom ID Collection.} Every user  collects and stores in its local storage $\mathcal{S}$ every ID broadcast by a device in its proximity.
-\item {\bf Reporting upon positive test.} To report a positive test, the user uploads $S^*$ to the server, which in turn appends it to a public list $\mathcal{L}$. The user erases its memory, and generates a new initial seed $S_0$.
-\item {\bf Checking proximity.} A user wanting to check proximity to a positive individual downloads the list $\mathcal{L}$ from the server. For every seed $S \in \mathcal{L}$, it generates the sequence of $\Delta$ $\id$'s starting from $S$. If any of these IDs is in the local storage $\mathcal{S}$, the user is alerted for potential exposure.
+\item {\bf Reporting upon positive test.} To report a positive test, the user uploads $S^*$ to the server, which in turn appends it to a public list $\mathcal{L}$. The user erases its memory, and generates a new initial seed $S_0$. \TODO{Y: Who is allowed to upload to the server?  Do you need a doctor's permission? }
+\item {\bf Checking proximity.} A user wanting to check proximity to a positive individual downloads the list $\mathcal{L}$ from the server. For every seed $S \in \mathcal{L}$, it generates the sequence of $\Delta$ $\id$'s starting from $S$. \TODO{Y:  How many id's?} If any of these IDs is in the local storage $\mathcal{S}$, the user is alerted for potential exposure.
 \end{itemize}
 
 
@@ -172,7 +183,7 @@ The public server supports scoped queries.  In particular, anyone can ask for a 
 \section{Further Security and Privacy Discussion}
 This section will provide a laundry list of a number of further privacy and security considerations.
 
-\section{Moral and Ethical Dilemmas}
+\section{Moral and Ethical Concerns}
 This section is an acknowledgement that there are numerous moral and ethical questions involved in contact tracing and in the development and adoption of any new technology. The question of how to balance in what is revealed for good of public health vs individual freedoms is one that is central to public health law. In many nations, positively tested citizens are already required to disclose aspects of their history.  This technology enables, while enabling more effecting public health law in manner that is privately sensitive, certainly has moral and ethical implications.  
 
 \begin{enumerate}
