@@ -45,7 +45,7 @@ themselves and be vigilant about symptoms).
 A mobile contact-tracing application seeks to augment the services provided public health offices, by enabling the following capabilities via computing and communications technology:
 
 \begin{itemize}
-\item \textbf{Privacy-sensitive, mobile tracing:}  The app can enable someone you were near in the last two weeks to warn you that they are now ill, even if you do not know them personally.  Crucially, as with conventional contract tracing done by public health services, the alert mechanism has a \emph{provably} secure implementation so as to ensure that positives cases remain anonymous to the general public, and that the alerts to exposed citizens are informed in a provably secure manner.
+\item \textbf{Privacy-sensitive, mobile tracing:}  The app can enable someone that an individual was near in the last two weeks to warn that individual that they are now ill, even if you do not know them personally.  Crucially, as with conventional contract tracing done by public health services, the alert mechanism has a \emph{provably} secure implementation so as to ensure that positives cases remain anonymous to the general public, and that the alerts to exposed citizens are informed in a provably secure manner.
 
 \item \textbf{Mobile-assisted contact tracing interviews:}  If a citizen becomes ill, he or she can use the app to improve the efficiency and completeness of manual contact tracing interviews. Privacy here is maximized by ensuring that all the data remains on the user's device, except for what they voluntarily reveal to healthcare authorities in order to enable contact tracing.
 
@@ -135,21 +135,30 @@ We now overview these three functionalities.
 \subsection{Privacy-sensitive, mobile tracing.} 
 One approach to privacy-sensitive alerting is to perform distributed, community-sourced approach to sharing information. In an example implementation, proximity-detecting signals via Bluetooth or ultrasonics can be harnessed.  If a user is both infected and is willing to warn others who may have been at risk via proximity to the user, then an authorization is given by healthcare authorities so as to warn people at risk.
 
-\paragraph{Protocol description.} In this description, we assume that there exists a relevant infection window, i.e., upon testing positive, contacts within the last $\Delta$ units of time may have been infected. (This should account to approximately two weeks.)
-
 \newcommand{\id}{\mathrm{id}}
+\newcommand{\dt}{\mathrm{dt}}
+\paragraph{Protocol description.} In this description, we assume that there exists a relevant infection window, i.e., upon testing positive, contacts within the last $\Delta$ units of time may have been infected. In particular, there is some understood time unit $\dt$. We want $\Delta \cdot \dt$ to be two weeks. 
+
+
 \begin{itemize}
-    \item {\bf Pseudorandom ID Generation.} Every user generates and periodically broadcasts a sequence of pseudorandom IDs $\id_1, \id_2, \ldots$. These IDs are fixed-length $n$-bit strings (typically, $n = 128$ bits). Their generation relies on a length-doubling function $f: \{0,1\}^n \to \{0,1\}^{2n}$. The user initially generates a random seed $S_0$, and then, at step $i$, computes
+    \item {\bf Pseudorandom ID Generation.} Every user generates and periodically broadcasts a sequence of pseudorandom IDs $\id_1, \id_2, \ldots$. These IDs are fixed-length $n$-bit strings (typically, $n = 128$ bits). The $i$-th $\id_i$ is broadcast at any time in the window $[t_0 + \dt\cdot (i-1), t_0 + \dt\cdot i[$, where $t_0$ is the start time. Their generation relies on a length-doubling function $f: \{0,1\}^n \to \{0,1\}^{2n}$. The user initially generates a random seed $S_0$, and then, after $i$ time units, computes
 \begin{displaymath}
 (S_i, \id_i) \gets f(S_{i-1}) \;.
 \end{displaymath}
-We assume that $f$ can be instantiated by using an appropriate hash function. For example, if $n = 128$, one can use the SHA-256 hash function applied to a 128-bit input. The key property is that each $\id_i$ is pseudorandom  as long as $S_0, S_1, \ldots, S_{i-1}$ are hidden, and even if any of the values $S_j$ for $j \geq i$ are revealed. After $t$ time steps, the user only stores $S^* \gets S_{\max\{t-\Delta,0\}}$ and the current $S_t$. 
+After $i$ time units, the user only stores $S^* \gets S_{\max\{i-\Delta,0\}}$ and the current $S_i$. Time units are absolute time here - if the device was powered off or the application disabled, we need to advance to the appropriate $S_i$. The function $f$ is obtained from an appropriate hash function. For example, if $n = 128$, we can use $f(x) = \textrm{SHA-256}(x)$.\footnote{The key property is that each $\id_i$ is pseudorandom  as long as $S_0, S_1, \ldots, S_{i-1}$ are hidden, and even if any of the values $S_j$ for $j \geq i$ are revealed.}
 
-For efficiency reason, we note that the time intervals to advance from $S_{i-1}$ to $S_i$ may be longer than the intervals between Bluetooth broadcasts, in which case the same $\id_i$ is broadcast repeatedly. 
-\item {\bf Pseudorandom ID Collection.} Every user  collects and stores in its local storage $\mathcal{S}$ every ID broadcast by a device in its proximity.
-\item {\bf Reporting upon positive test.} To report a positive test, the user uploads $S^*$ to the server, which in turn appends it to a public list $\mathcal{L}$. The user erases its memory, and generates a new initial seed $S_0$. \TODO{Y: Who is allowed to upload to the server?  Do you need a doctor's permission? }
-\item {\bf Checking proximity.} A user wanting to check proximity to a positive individual downloads the list $\mathcal{L}$ from the server. For every seed $S \in \mathcal{L}$, it generates the sequence of $\Delta$ $\id$'s starting from $S$. \TODO{Y:  How many id's?} If any of these IDs is in the local storage $\mathcal{S}$, the user is alerted for potential exposure.
+%For efficiency reason, we note that the time %intervals to advance from $S_{i-1}$ to $S_i$ may be %longer than the intervals between Bluetooth %broadcasts, in which case the same $\id_i$ is broadcast repeatedly. 
+\item {\bf Pseudorandom ID collection.} For every $\id$ broadcast by a device in its proximity at time $t$, a user stores a pair $(\id, t)$ in its local storage $\mathcal{S}$.
+\item {\bf Reporting upon positive test.} To report a positive test, the user uploads $S^*$ to the server, which (after some delay; see below) stores $(S^*, t_{start})$ in a public list $\mathcal{L}$, where $t_{start}$ is an (approximation) of the time when $S^*$ was generated. The user erases its memory, and generates a new initial seed $S_0$. 
+%\TODO{Y: Who is allowed to upload to the server?  %Do you need a doctor's permission? }
+% Clarified below.
+\item {\bf Checking proximity.} A user wanting to check proximity to a positive individual downloads the list $\mathcal{L}$ from the server. For every seed $(S^*,t_{start})$ in $\mathcal{L}$, it generates the sequence of IDs $\id^*_1, \ldots, \id^*_{\Delta}$ starting from $S^*$, as well as times $t_i = t_{start} + (i-1) \dt$. If $\mathcal{S}$ contains $(\id_i^*, t)$ for some $i \in \{1, \ldots, \Delta\}$ such that $t$ and $t_i$ are sufficiently close, the user is alerted of potential exposure.
 \end{itemize}
+{\bf On delays.} To prevent replay attacks, we need to publish the data with a slight delay. The delay should be chosen such that  
+
+Note that in the context of this description we do not discuss the mechanism of {\em how} reporting is managed (self-reporting vs. health-authority assisted).  \TODO{Discuss this somewhere, though!}
+
+
 
 
 
@@ -158,12 +167,15 @@ For efficiency reason, we note that the time intervals to advance from $S_{i-1}$
 Let us refer to users as either ``positive'' or ``negative'' depending on whether they reported positive or not. All of the following statements assume cryptographic security of $f$.
 
 \noindent {\em Privacy for negative users.}  A negative user $u$ only broadcasts pseudorandom IDs. These IDs cannot be linked without knowledge of the internal state of $u$. This privacy guarantees improves with the frequency of updating the seed $S_i$ -- ideally, if a different $\id_i$ is broadcast each time, no linking is possible. This however results in less efficient checking for exposure by negative users.
-\medskip
+\smallskip
 
 \noindent {\em Privacy for positive users.} Upon reporting positive, the last $\Delta$ IDs generated by the positive user {\em can} be linked. Note that this is only true for the IDs generated within the infection window. Older IDs and {\em newer} IDs cannot be linked with those in the infection window, and with each other.
-\medskip
+\smallskip
 
 \noindent {\em Integrity guarantees.} It is infeasible for an attacker to upload to the server a value $S^*$ which generates an $\id$ that equals one generated by another user. This prevents the attacker from misreporting negative users, and erroneously alert their contacts.  
+\smallskip
+
+\noindent {\em Replay attacks.} The time stamping is necessary to prevent replay attacks -- we want to prevent an attacker to simply download an $\id$ from the server, and broadcast it in a wide region, erroneously convincing a large number of users of potential exposure.
 
 \subsubsection{Extension}
 
