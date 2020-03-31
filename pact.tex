@@ -7,8 +7,7 @@
 \newcommand{\TODO}[1]{ {\color{blue} #1 }}
 
 
-\title{{\Huge PACT\/}:   {\Huge P\/}rivacy Sensitive Protocols {\Huge A\/}nd Standards\\
-for Mobile {\Huge C\/}ontact {\Huge T\/}racing }
+\title{{\Huge PACT\/}:   {\Huge P\/}rivacy Sensitive Protocols and Mechanisms for Mobile {\Huge C\/}ontact {\Huge T\/}racing }
 \date{}
 
 \setlength{\oddsidemargin}{0.25 in}
@@ -45,27 +44,28 @@ themselves and be vigilant about symptoms).
 A mobile contact-tracing application seeks to augment the services provided public health offices, by enabling the following capabilities via computing and communications technology:
 
 \begin{itemize}
-\item \textbf{Privacy-sensitive, mobile tracing:}  The app can enable someone that an individual was near in the last two weeks to warn that individual that they are now ill, even if you do not know them personally.  Crucially, as with conventional contract tracing done by public health services, the alert mechanism has a \emph{provably} secure implementation so as to ensure that positives cases remain anonymous to the general public, and that the alerts to exposed citizens are informed in a provably secure manner.
+\item \textbf{(Bluetooth based) Privacy-sensitive, mobile tracing:}  The app can enable someone who has become ill, or who has received confirmation of infection with a positive test for COVID-19, to voluntarily share this information to other individuals, who they came in close proximity with over the last two weeks, even if there is no personal connection between these individuals\footnote{Medical criteria for determining if an individual is at risk is "within 6 feet of a COVID-19 positive person for over 10 minutes".}.  Crucially, as with conventional contract tracing done by public health services, the alert mechanism has a \emph{provably} secure implementation so as to ensure that positives cases remain anonymous to the general public, and that the alerts to exposed citizens are informed in a provably secure manner. Individuals who share information do so with disclosure and consent around potential risks of private information being shared, which we discuss in Section~\ref{sect:FAQ}. 
 
-\item \textbf{Mobile-assisted contact tracing interviews:}  If a citizen becomes ill, he or she can use the app to improve the efficiency and completeness of manual contact tracing interviews. Privacy here is maximized by ensuring that all the data remains on the user's device, except for what they voluntarily reveal to healthcare authorities in order to enable contact tracing.
+
+\item \textbf{Mobile-assisted contact tracing interviews:}  If a citizen becomes ill, he or she can use the app to improve the efficiency and completeness of manual contact tracing interviews. Privacy here is maximized by ensuring that all the data remains on the user's device, except for what they voluntarily decide to reveal to healthcare authorities in order to enable contact tracing. In advance of sharing, they are informed about how their data will be used and the potential risk of de-anonymization.
 
 \item \textbf{Narrowcast messages:}  Public health authorities can broadcast
   custom-tailored messages to specific, relevant subsets of citizens.  For example, the following message might be issued: ``If you visited
-  the X Eldercare Center between March 7th and 10th, please email yy@hhhealth.org''.  Here, it is a citizens voluntary choice to search these messages for what is relevant to them.
+  the X Eldercare Center between March 7th and 10th, please email yy@hhhealth.org''.  Here, it is a citizens voluntary choice to search these messages for what is relevant to them or to set up automated alerting based on static (e.g., by geographic region) or dynamic (e.g., by sets of locations and times that are included in their personal dataset) filters to guide alerting and awareness.
   
 \end{itemize}
 
-Importantly, the smartphone app, by default, keeps \emph{all} personal data on a citizen's phone, while enabling these key capabilities; information is shared via voluntary disclosure actions taken, with the understandings relayed via careful disclosure. 
+Importantly, the smartphone app, by default, keeps \emph{all} personal data on a citizen's phone, while enabling these key capabilities; information is shared via voluntary disclosure actions taken, with the understandings relayed via careful disclosure. The data on the phone can be encrypted and can be set up to automatically time out based on end-user controlled policies.  This would prevent the dataset from being accessed or requested via legal subpoena or other governmental programs and policies.
 
 \emph{From a civil liberties standpoint, the privacy guarantees these protocols ensure are consistent with the disclosures already extant in contract tracing methods done by public health services} (where some information from a positive tested citizen is revealed to other exposed citizens). In short, we seek to empower public health services, while maintaining civil liberties.
  
-\section{FAQ: Privacy, Security, and Disclosures} 
-%Implications of Security Breaches\\ and Voluntary Disclosures
+\section{FAQ: Privacy, Security, and Disclosures} \label{sect:FAQ}
 
 It is helpful to directly address some of the most pressing questions. Let us focus on the "mobile tracing" protocol. 
-Narrowcasting is simply a broadacasting mechanistm, and, for "interviews", all the data remains on the user's device, except for what they voluntarily reveal to healthcare authorities in order to enable contact tracing.  Mobile tracing is the most important protocol to explicitly examine to see if it is consistent with the basic principles of civil liberties, while also being helpful for contact tracing.
+Narrowcasting is simply a broadcasting mechanism, and, for "interviews", all the data remains on the user's device, except for what they voluntarily reveal to healthcare authorities in order to enable contact tracing.  Mobile tracing is the most important protocol to explicitly examine to see if it is consistent with the basic principles of civil liberties, while also being helpful for contact tracing.
 
-\textbf{Privacy and Disclosure.} Let us first start with what private information is protected and what is disclosed with consent. In the below, we refer to an exposed citizen as one who has been in contact with a COVID19 positive person (under the current medical definition, i.e. within 6 feet for over 10 minutes).
+
+\textbf{Privacy and Disclosure.} Let us first start with what private information is protected and what is shared following disclosure and consent. In the below, we refer to an exposed citizen as one who has been in contact with an individual who has tested as positive for COVID-19 (under criteria as defined by public health programs, e.g., "within 6 feet for over 10 minutes").
 
 %\item Will my previously visited locations be available to the public?
 
@@ -74,15 +74,17 @@ Narrowcasting is simply a broadacasting mechanistm, and, for "interviews", all t
 \begin{enumerate}[leftmargin=*]
 \item If I am tested positive and I disclose this information, what is revealed to others?
 
-Any other citizen who has been exposed is notified, along with the time at which the exposure occurred at. No other information will be revealed to any other citizens. \TODO{Y:  The only information that is revealed to other citizens is an approximate number of people who have been infected.}
+Any other citizen who has been exposed is notified, along with the time at which the exposure occurred at. No other information will be revealed to any other citizens. The only information that is revealed to other citizens is an approximate number of people who have been infected.
 
 \item If I receive a message that I have been exposed, what is disclosed to the general public? 
  
-The protocol itself will not reveal anything about your identity; specifically, the protocol \emph{never} transmits any of your private information to a public database. It may be helpful to you let others know about this. For example: if you are exposed, alerting this to public health authorities could give you access to testing or other care. 
+The protocol itself will not reveal anything about your identity; specifically, the protocol \emph{never} transmits any of your private information to a public database. It may be helpful to let others know about this. For example: if you are exposed, alerting this to public health authorities could give you access to testing or other care. 
 
 \item For the automated tracing procedure, what data is stored on my phone? What data is stored publicly about me?
 
-Each phone will broadcast a \TODO{Y: random} signal (using Bluetooth) to other nearby phones. All phones will remember (from the last two weeks) the signals that they send and those signals they receive. These broadcast signals can be thought of as non-identifying random numbers. \TODO{Y: It may make sense to emphasize that the signal each phone broadcasts changes every x minutes, so these signals are not only anonymizers, but cannot be linked to any user.}  If someone test positives and choose to disclose this to help others, they will then disclose \emph{only} their broadcasts in the last two weeks. Then other phones can check if they were nearby to determine if they have been exposed. Standard cryptographic procedures can prevent identity theft, which we now discuss.
+Each phone will broadcast a (pseudo) random signal (using Bluetooth) to other nearby phones. All phones will remember (from the last two weeks) the signals that they send and those signals they receive. These broadcast signals can be thought of as non-identifying random numbers. 
+%\TODO{Y: It may make sense to emphasize that the signal each phone broadcasts changes every x minutes, so these signals are not only anonymizers, but cannot be linked to any user.}  
+If someone test positives and choose to disclose this to help others, they will then disclose \emph{only} their broadcasts in the last two weeks. Then other phones can check if they were nearby to determine if they have been exposed. Standard cryptographic procedures can prevent identity theft, which we now discuss.
 
 \end{enumerate}
 
@@ -92,7 +94,8 @@ Each phone will broadcast a \TODO{Y: random} signal (using Bluetooth) to other n
 \begin{enumerate}[leftmargin=*]
 
 \item If you are negative, can a malicious citizen listen to your phone's broadcasts and misreport you as being a positive?
-%Can a hacker misreport negative individuals as medically confirmed positive?
+%Can a hacker misreport negative individuals as medically confirmed positive? 
+\TODO{SK: Stefano, please check question Q/A is ok and delete comment.}
    
    No, this is not possible. This is because the protocol uses cryptographic mechanisms which prevent this. These protocols are based on well-studied methods, which are also used for other security purposes including online banking.
    % No, this is not possible. This is because there standard cryptographic protocols which prevent this (e.g. related to how online banking works and other secure exchanges). 
@@ -100,16 +103,16 @@ Each phone will broadcast a \TODO{Y: random} signal (using Bluetooth) to other n
 
 \item If the government or a hacker obtains the public data used to alert exposed citizens, what can they learn?
 
-  The government/hacker learns a sequence of random identifiers that have been broadcast, over time, in proximity of individuals who tested positive. The location of the individual who tested positive could be inferred if these random identifiers were collected at specific locations. The individual remains otherwise anonymous. The security of the system relies on the fact this data set can be made public.
+  The government/hacker learns a sequence of random identifiers (and public health message) that have been broadcast, over time, in proximity of individuals who tested positive. The location of the individual who tested positive could be inferred if these random identifiers were collected separately at specific locations. The individual remains otherwise anonymous. The security of the system relies on the fact this data set can be made public.
 
 %\item If the government or a third party hack my phone and hacks my app, what to the learn?
 
-\item Can a positive's citizens identity, who chooses to report being positive, be inferred by others? 
+\item Can a positive citizen's identity, who chooses to report being positive, be inferred by others? 
 
-Possibly. Note that an individual who was in close proximity to a positive may be able to infer the positive's identity.  
-Furthermore, two (or more) users who have been in proximity of the same positive can also perhaps jointly collude to identify the positive.
-However, the positive's identity will never be explicitly broadcast. In fact, identities are not even  stored in the dataset; it is only the positive's random broadcast that are stored.
-It should be noted that preventing proximity based identification of this sort is simply not possible to avoid in any mobile based alerting system. This is because the simple fact that an individual has been alerted to being exposed is information that itself could reveal identifying information.  Preventing such disclosures is simply something is not possible, even under cryptographic procedures.
+We note that de-anonymization is possible and is a risk to volunteers who would prefer to remain anonymous. An individual who had been in close proximity to a positive may be able to infer the identity of the individual who has tested positive.  
+Furthermore, two (or more) users who have been in proximity of the same positive may be able to jointly collude to identify the positive.
+However, the positive's identity will never be explicitly broadcast. In fact, identities are not even stored in the dataset; it is only the positive's random broadcast that are stored.
+It should be noted that preventing proximity based identification of this sort is simply not possible to avoid in any contact tracing system, even a manual one. This is because the simple fact that an individual has been alerted to being exposed is information that itself could reveal identifying information.  Preventing such disclosures is simply something is not possible, even under cryptographic procedures.
 
 \item Can a malicious citizen eavesdrop on the bluetooth signals\footnote{The signals we mean here are those signals that broadcast under the mobile tracing protocol.} that my phone is broadcasting publicly (to ping other nearby phones) and then use this information in any way against me or any other citizens?
 
@@ -117,14 +120,26 @@ It should be noted that preventing proximity based identification of this sort i
 
 \end{enumerate}
 
+\iffalse
+\subsection{Mobile-assisted, contact tracing questions}
 
+\begin{enumerate}[leftmargin=*]
+\item For this protocol, what data is stored on my phone? What data is stored 
 
-\textbf{Surveillance.} Finally, it is helpful to contrast the goals in PACT to those of other nations.
+and, for "interviews", all the data remains on the user's device, except for what they voluntarily reveal to others of the end users choice, e.g., healthcare authorities or other users of the system, in order to enable contact tracing.  Mobile tracing is the most important protocol to explicitly examine to see if it is consistent with the basic principles of civil liberties, while also being helpful for contact tracing.
+
+The data on the phone can be encrypted and can be set up to automatically time out based on end-user controlled policies.  This would prevent the dataset from being accessed or requested via legal subpoena or other governmental programs and policies.
+
+\end{enumerate}
+\fi
+
+\textbf{Surveillance.} 
+Finally, it is helpful to contrast the goals in PACT to several high-profile tracing protocols and mechanisms employed to date in other countries.
 
 \begin{enumerate}[leftmargin=*]
 \item How does PACT contrast to approaches of other governments?
 
-South Korea, Israel, and United Kingdom all have passed emergency laws which permit the state to use any telecommunication information, which gives the state essentially unchecked surveillance powers. These laws set worrisome precedents for privacy and civil liberties. PACT seeks to ensure this does not occur, where this document gives transparent procedures and protocols so that the security and privacy concerns can be upheld for any citizen to examine. Users data is stored on their phone. the In spirit, the privacy guarantees of PACT are designed to be consistent with the disclosures already extant in contract tracing methods done by public health services. 
+South Korea, Israel, and United Kingdom all have passed emergency laws which permit the state to use any telecommunication information, which gives the state significant surveillance powers. These laws set worrisome precedents for privacy and civil liberties. PACT is designed to provide valuable services for mitigating the flow of infection through a population, while taking a privacy-first approach to tracing, focusing on the critical and central challenge of privacy. We seek to provide transparent procedures and protocols so that the security and privacy concerns can be upheld for any citizen to examine and to engage with in a voluntary and informed manner.  In this spirit, the privacy guarantees of PACT are designed to be consistent with the disclosures already extant in contract tracing methods done by public health services. 
 
 \end{enumerate}
 
@@ -132,12 +147,14 @@ South Korea, Israel, and United Kingdom all have passed emergency laws which per
 We now overview these three functionalities.
 
 
-\subsection{Privacy-sensitive, mobile tracing.} 
-One approach to privacy-sensitive alerting is to perform distributed, community-sourced approach to sharing information. In an example implementation, proximity-detecting signals via Bluetooth or ultrasonics can be harnessed.  If a user is both infected and is willing to warn others who may have been at risk via proximity to the user, then an authorization is given by healthcare authorities so as to warn people at risk.
+\subsection{Privacy-sensitive mobile tracing.} 
+PACT is a privacy-sensitive, voluntary, community-sourced approach to sharing information. The system can be based on individually and privately collected location information, whether by GPS, Wifi locations or other beacons.  In another example implementation, proximity-detecting signals via Bluetooth or ultrasonics can be harnessed.  If a user is both infected and is willing to warn others who may have been at risk via proximity to the user, then anonymized information is uploaded to a server to warn other users of potential exposure. We note that in the following description we do not discuss the mechanism of {\em how} reporting is managed -- i.e., self-reporting vs. health-care provider assisted -- as this is orthogonal to the specification of the protocol. However, we envision both options being possible, and depending on the type of reports, a signature is appended to upload to the server (with an app-specific signing key in case of self reporting, and a key from a health-care provider otherwise.
+
+\TODO{ST: Someone please sync the above with what is really happening in the app.}
 
 \newcommand{\id}{\mathrm{id}}
 \newcommand{\dt}{\mathrm{dt}}
-\paragraph{Protocol description.} In this description, we assume that there exists a relevant infection window, i.e., upon testing positive, contacts within the last $\Delta$ units of time may have been infected. In particular, there is some understood time unit $\dt$. We want $\Delta \cdot \dt$ to be two weeks. 
+\noindent {\bf Protocol description.} In this description, we assume that there exists a relevant infection window, i.e., upon testing positive, contacts within the last $\Delta$ units of time may have been infected. In particular, there is some understood time unit $\dt$. We typically want $\Delta \cdot \dt$ to be two weeks. 
 
 
 \begin{itemize}
@@ -154,32 +171,17 @@ After $i$ time units, the user only stores $S^* \gets S_{\max\{i-\Delta,0\}}$ an
 % Clarified below.
 \item {\bf Checking proximity.} A user wanting to check proximity to a positive individual downloads the list $\mathcal{L}$ from the server. For every seed $(S^*,t_{start})$ in $\mathcal{L}$, it generates the sequence of IDs $\id^*_1, \ldots, \id^*_{\Delta}$ starting from $S^*$, as well as times $t_i = t_{start} + (i-1) \dt$. If $\mathcal{S}$ contains $(\id_i^*, t)$ for some $i \in \{1, \ldots, \Delta\}$ such that $t$ and $t_i$ are sufficiently close, the user is alerted of potential exposure.
 \end{itemize}
-{\bf On delays.} To prevent replay attacks, we need to publish the data with a slight delay. The delay should be chosen such that  
+{\bf On delays.} To prevent replay attacks, we need to publish the data with a slight delay. The delay should be chosen such that the last $\id^*_{\Delta}$ generated from $S^*$ is not recognized as potential exposure by any user if immediately rebroadcast by a malicious party. We envision this delay to be a few minutes (e.g., 15 minutes).
 
-Note that in the context of this description we do not discuss the mechanism of {\em how} reporting is managed (self-reporting vs. health-authority assisted).  \TODO{Discuss this somewhere, though!}
+\noindent {\bf Privacy/security properties.} Let us refer to users as either ``positive'' or ``negative'' depending on whether they reported positive or not. All of the following statements assume cryptographic security of $f$. Then, the above protocol has the following properties:
+\begin{itemize}
+    \item {\em Privacy for negative users.}  A negative user $u$ only broadcasts pseudorandom IDs. These IDs cannot be linked without knowledge of the internal state of $u$. This privacy guarantees improves with the frequency of updating the seed $S_i$ -- ideally, if a different $\id_i$ is broadcast each time, no linking is possible. This however results in less efficient checking for exposure by negative users.
+    \item {\em Privacy for positive users.} Upon reporting positive, the last $\Delta$ IDs generated by the positive user {\em can} be linked. Note that this is only true for the IDs generated within the infection window. Older IDs and {\em newer} IDs cannot be linked with those in the infection window, and with each other.
+    \item {\em Integrity guarantees.} It is infeasible for an attacker to upload to the server a value $S^*$ which generates an $\id$ that equals one generated by another user. This prevents the attacker from misreporting negative users, and erroneously alert their contacts.  
+    \item {\em Resilience to replay attacks.} The time stamping is necessary to prevent replay attacks -- we want to prevent an attacker to simply download an $\id$ from the server, and broadcast it in a wide region, erroneously convincing a large number of users of potential exposure.
+\end{itemize}
 
-
-
-
-
-\subsubsection{Privacy/security properties}
-
-Let us refer to users as either ``positive'' or ``negative'' depending on whether they reported positive or not. All of the following statements assume cryptographic security of $f$.
-
-\noindent {\em Privacy for negative users.}  A negative user $u$ only broadcasts pseudorandom IDs. These IDs cannot be linked without knowledge of the internal state of $u$. This privacy guarantees improves with the frequency of updating the seed $S_i$ -- ideally, if a different $\id_i$ is broadcast each time, no linking is possible. This however results in less efficient checking for exposure by negative users.
-\smallskip
-
-\noindent {\em Privacy for positive users.} Upon reporting positive, the last $\Delta$ IDs generated by the positive user {\em can} be linked. Note that this is only true for the IDs generated within the infection window. Older IDs and {\em newer} IDs cannot be linked with those in the infection window, and with each other.
-\smallskip
-
-\noindent {\em Integrity guarantees.} It is infeasible for an attacker to upload to the server a value $S^*$ which generates an $\id$ that equals one generated by another user. This prevents the attacker from misreporting negative users, and erroneously alert their contacts.  
-\smallskip
-
-\noindent {\em Replay attacks.} The time stamping is necessary to prevent replay attacks -- we want to prevent an attacker to simply download an $\id$ from the server, and broadcast it in a wide region, erroneously convincing a large number of users of potential exposure.
-
-\subsubsection{Extension}
-
-One concern is that IDs of a positive user can be linked within the infection window. This concern can be mitigated. Instead of maintaining a single sequence $S_0, S_1, \ldots$, a user can regularly restart with a random initial seed, and generate  shorter sequences. Upon reporting positive, the user uploads all seeds generating sequences used within the infection window. The server however should not simply append uploaded seeds -- rather, it should collect seeds for a sufficiently long period, and shuffle them. The actual privacy improvement is  hard to assess without a good statistical model of upload frequency. This also increases the latency of the system.
+\noindent {\bf Extensions.} One concern is that IDs of a positive user can be linked within the infection window. This concern can be mitigated. Instead of maintaining a single sequence $S_0, S_1, \ldots$, a user can regularly restart with a random initial seed, and generate  shorter sequences. Upon reporting positive, the user uploads all seeds generating sequences used within the infection window. The server however should not simply append uploaded seeds -- rather, it should collect seeds for a sufficiently long period, and shuffle them. The actual privacy improvement is  hard to assess without a good statistical model of upload frequency. This also increases the latency of the system.
 
 \subsection{Mobile-assisted Contact Tracing Interviews} 
 Contact tracing interviews are laborious and often miss important events due to the limitations of human memory.  Our plan to assist here is to provide information to the end user (and with consent) that can be shared with a healthcare organization which is charged with performing contact tracing interviews.   This is not an exposure of the entire observational log, but rather an extract of the information which is requested in a standard contact tracing interview. We have been working with healthcare teams from Boston and the University of Washington on formats and content of information that are traditionally sought by public health agencies.
@@ -190,24 +192,41 @@ Healthcare authorities from NYC have informed us that they would love to have th
 
 Anyone can manually query the public server to determine if there are messages potentially relevant to them per their locations and dwells at the locations over a period of time. However, simple automation can be extremely helpful as phones can listen in and alert based on filters that are dynamically set up based on privately-held locations and activities. Upon downloading (area x time, message) pairs a phone app (for example) can automatically check whether the message is relevant to the user.  If it is relevant, a message is relayed to the device owner.
 
-The public server supports scoped queries.  In particular, anyone can ask for a set of messages relevant to some region $R$ where $R$ is defined by a latitude/longitude range with messages after some timestamp.  More specific subscriptions can be constructed on the fly based policies that consider region $R$ and privately observed periods of time that an individual has spent in a region. Such scoped queries and messaging services that relay content based on location or on location and periods of time are a convenience to make computation and communication tractable.  The reference implementation uses regions greater in size than typical GeoIP tables.
+The public server supports scoped queries.  In particular, anyone can ask for a set of messages relevant to some region $R$ where $R$ is defined by a latitude/longitude range with messages after some timestamp.  More specific subscriptions can be constructed on the fly based on policies that consider a region $R$ and privately observed periods of time that an individual has spent in a region. Such scoped queries and messaging services that relay content based on location or on location and periods of time are a convenience to make computation and communication tractable.  The reference implementation uses regions greater in size than typical GeoIP tables.
+
+To be specific, let's first define some concepts.
+\begin{itemize}
+    \item Region: A region consists of a latitude prefix, a longitude prefix, and the precision in each.  For example, New York which is at 40.71455 N, -74.00712 E can be coarsened to 40 N, -74 E with two digits of precision (the actual implementation will use bits).
+    \item Time: A timestamp is specified in the number of seconds (as a 64 bit integer) since the January 1, 1970. 
+    \item Location: A location consists of a full precision Latitude and Longitude
+    \item Area: An area consists of a Location, a Radius, a beginning Time, and an ending Time.
+    \item Bluetooth Message: A Bluetooth message consists of a fixed-length string of bytes and a string.  It is used with the Bluetooth sensory log to discover if there is a match which results in the message being delivered.  
+    \item Message: A message is a cryptographically signed string of bytes which is interpreted by the phone app. This is used for either a public health message (announced to the user if the sensory log matches) or a Bluetooth Message. 
+\end{itemize}
+
+With the above defined, there are two common queries that the server supports as well as an announcement mechanism.
+\begin{itemize}
+    \item GetMessages(Region, Time) returns all of the (Area, Message) pairs that the server has added since Time for the Region. The app can then check locally whether the Area intersects with the recorded sensory log of (Location,Time) pairs on the phone, and alert the user with the Message if so.   
+    \item HowBig(Region, Time) returns the (approximate) number of bytes worth of messages that would be downloaded on a GetMessages call with the same arguments.  HowBig allows the phone app to control how much information it reveals to the server about locations/times of interest according to a bandwidth/privacy tradeoff.  For example, the phone could start with a very coarse region, specifying higher precision regions until the bandwidth required is acceptable, then invoke GetMessages.  (This functionality is designed to support controlled anonymity across widely varying population densities.)
+    \item Announce(Area,Message) uploads an (Area, Message) pair for general distribution.  To prevent spamming, the signature of the message is checked against a whitelist defined with the server. 
+\end{itemize}
+An individual phone app may be configured to work with one or more servers.
 
 \section{Further Security and Privacy Discussion}
 This section will provide a laundry list of a number of further privacy and security considerations.
 
-\section{Moral and Ethical Concerns}
-This section is an acknowledgement that there are numerous moral and ethical questions involved in contact tracing and in the development and adoption of any new technology. The question of how to balance in what is revealed for good of public health vs individual freedoms is one that is central to public health law. In many nations, positively tested citizens are already required to disclose aspects of their history.  This technology enables, while enabling more effecting public health law in manner that is privately sensitive, certainly has moral and ethical implications.  
+\section{Ethical Concerns}
+This section is an acknowledgment that there are ethical questions involved in contact tracing and in the development and adoption of any new technology. The question of how to balance in what is revealed for good of public health vs individual freedoms is one that is central to public health law. In many nations, positively tested citizens are required to disclose aspects of their history.  This technology enables more effecting public health law in manner that is privacy sensitive.
 
 \begin{enumerate}
-\item The technology will have come with certain tradeoffs, like false positive and false negative rates.  The false alerts may put unfair burdens on cross section of society differently from another cross section.  The alerts themselves may also benefit one cross section of society more than another. It is worth noting the current COVID-19 pandemic has placed highly imbalanced risks on essential workers compared to non-essential workers in developed nations.
-\item The narrowcast broadcasting mechanism permits the local public health departments to provided messages to citizens. The quality of local health departments may vary widely in different regions thereby enabling further imbalances.
-\item If adoption occurs, then this creates a different equilibrium in society, where citizens have adopted a technology which will impact their lives and health. It may not benefit all parties equally.
-\item There is a question of this technology benefits certain classes of 
-\item There a concern of this technology being of greatest benefit to those with mobile phones.
+\item All tracing technologies come with risks, benefits, and tradeoffs, like false positive and false negative rates.  The false alerts may put unfair burdens on one cross section of society differently from another cross section.  The alerts themselves may also benefit one cross section of society more than another. It is worth noting the current COVID-19 pandemic has placed highly imbalanced risks on essential workers compared to non-essential workers in developed nations.
+\item The narrowcast broadcasting mechanism permits the local public health departments to provide messages to citizens. The quality of local health departments may vary widely in different regions thereby enabling further imbalances.
+\item If adoption occurs, then this creates a different equilibrium in society, where citizens have adopted a new technology which will impact their lives and health. It may not benefit all parties equally.
+\item This technology may provide the greatest benefit to those with mobile phones.
 \item The protocols outlined here do not explicitly require government regulation or hospital certification. They may also be used with crowd-sourcing or other distributed means. This has implications to lesser developed nations.
 \end{enumerate}
 
-A detailed list of moral and ethical concerns goes well beyond the scope of this document. 
+A detailed list of all potential ethical concerns is beyond the scope of this document. 
 
 \section{Discussion: "TTT" and Adoption}
 Tracing is part one part of a conventional epidemic response strategy, based on Tests, Tracing, and "Timeouts": 
