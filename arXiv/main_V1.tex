@@ -25,13 +25,13 @@
 
 
 
-\title{{\Huge PACT\/}:   {\Huge P\/}rivacy-Sensitive Protocols {\Huge A\/}nd Mechanisms
+\title{{\Huge PACT\/}:   {\Huge P\/}rivacy Sensitive Protocols {\Huge A\/}nd Mechanisms
 \\for Mobile {\Huge C\/}ontact {\Huge T\/}racing }
 \date{}
 
 \author{
-Justin Chan$^{1}$, Shyam Gollakota$^{1}$, Eric Horvitz$^{\dag,1,3,4}$,  Joseph Jaeger$^{\dag,1}$,\\ 
-Sham Kakade$^{\dag,1,2,4}$, Tadayoshi Kohno$^{1}$, John Langford$^{\dag,4}$, Jonathan Larson$^{4}$,\\   Sudheesh Singanamalla$^{1}$,
+Justin Chan$^{1}$, Shyam Gollakota$^{1}$, Eric Horvitz$^{\dag,1,3}$,  Joseph Jaeger$^{\dag,1}$,\\ 
+Sham Kakade$^{\dag,1,2}$, Tadayoshi Kohno$^{1}$, John Langford$^{\dag}$, Jonathan Larson,\\   Sudheesh Singanamalla$^{1}$,
 Jacob Sunshine$^{3}$, Stefano Tessaro$^{\dag,1}$  
 \\
 \\
@@ -41,9 +41,7 @@ Jacob Sunshine$^{3}$, Stefano Tessaro$^{\dag,1}$
 \\
 	$^3$ School of Medicine, University of Washington
 \\
-	$^4$ Microsoft Research
-\\
-	$^{\dag}$ Corresponding authors\footnote{Email: \texttt{jsjaeger@cs.washington.edu}, \texttt{eric@horvitz.org}, \texttt{sham@cs.washington.edu}, \texttt{jl@hunch.net},
+	$^{\dag}$ Corresponding authors~\footnote{Emails: \texttt{jsjaeger@cs.washington.edu}, \texttt{sham@cs.washington.edu}, \texttt{jl@hunch.net},
 	\texttt{tessaro@cs.washington.edu}
 	}
 }
@@ -59,7 +57,7 @@ Jacob Sunshine$^{3}$, Stefano Tessaro$^{\dag,1}$
 The global health threat from COVID-19 has been controlled in a number of instances by large-scale testing and contact tracing efforts.
 We created this document to suggest three functionalities on how we might best harness computing technologies to supporting the goals of public health organizations in minimizing morbidity and mortality associated with the spread of COVID-19, 
 while protecting the civil liberties of individuals.
-In particular, this work advocates for a third-party--free approach to assisted mobile contact tracing, because such an approach mitigates the security and privacy risks of requiring a trusted third party. We also explicitly consider the inferential risks involved in any contract tracing system, where any alert to a user could itself give rise to de-anonymizing information.  
+In particular, this work advocates for a third-party free approach to assisted mobile contact tracing, because such an approach mitigates the security and privacy risks of requiring a trusted third party. We also explicitly consider the inferential risks involved in any contract tracing system, where any alert to a user could itself give rise to de-anonymizing information.  
 
 More generally, we hope to participate in bringing together colleagues in industry, academia, and civil society to discuss and converge on ideas around a critical issue rising with attempts to mitigate the COVID-19 pandemic.
 \end{abstract}
@@ -83,7 +81,7 @@ avoids the need to collect and share \emph{absolute} location information.
 Credit: M Eifler.}
 \end{wrapfigure}
 
-This work specifies a third-party--free set of protocols and mechanisms in order to achieve these objectives. While approaches which rely on trusted third parties can be straightforward, many naturally oppose the aggregation of information and power that it represents, the potential for misuse by a central authority, and the precedent that such an approach would set.
+This work specifies a third-party free set of protocols and mechanisms in order to achieve these objectives. While approaches which rely on trusted third-parties can be straightforward, many naturally oppose the aggregation of information and power that it represents, the potential for misuse by a central authority, and the precedent that such an approach would set.
 
 It is first helpful to review the conventional contact tracing strategies executed by public health organizations, which operate as follows: Positively tested citizens are asked to reveal (voluntarily, or enforced via public health policy or by law depending on region) their contact history to public health officers. The public health officers then inform other citizens who have been at risk to the infectious agent based on co-location, via some definition of co-location, supported by look-up or inference about locations. The citizens deemed to be at risk are then asked to take appropriate action (often to either seek tests or to quarantine
 themselves and to be vigilant about symptoms).  It is important to emphasize that the current approach \emph{already} makes a tradeoff between the privacy of a positively tested individual and the benefits to society.
@@ -96,7 +94,7 @@ We describe mobile contact-tracing functionalities that seeks to augment the ser
 
 \item \textbf{Narrowcast messages:}  Public health authorities can make available custom-tailored messages to specific, relevant subsets of citizens.  For example, the following message might be issued: ``If you visited the X Eldercare Center between March 7th and 10th, please email yy@hhhealth.org'' or ``Please refrain from entering playground Z until April 6th because it needs to undergo decontamination.''  A mobile app can download all of these messages and display those relevant to a citizen based on the app's sensory log or potential future movements.  This capability allows public health officials to quickly warn people when new hotspots arise, or canvas for general information.  It enables a citizen to be well-informed about extremely local pandemic-relevant events.  
 
-\item \textbf{Privacy-sensitive, mobile tracing:} Proximity-based signals seem to provide the best available contact sensor from one phone to another; see Figure~\ref{fig:bubble} for the basic approach. Proximity-based sensing can be done in a privacy-sensitive manner. With the approach, no absolute location information is collected nor shared. Variants of proximity-based analyses have been employed in the past for privacy-sensitive analyses in healthcare \cite{white2012}. Taking advantage of proximity-based signals can speed the process of contact discovery and enable contact tracing of otherwise undiscoverable people like the fellow commuter on the train.  This can also be done with a third-party--free approach providing similar privacy tradeoffs as manual contact tracing.  
+\item \textbf{Privacy-sensitive, mobile tracing:} Proximity-based signals seem to provide the best available contact sensor from one phone to another; see Figure~\ref{fig:bubble} for the basic approach. Proximity-based sensing can be done in a privacy-sensitive manner. With the approach, no absolute location information is collected nor shared. Variants of proximity-based analyses have been employed in the past for privacy-sensitive analyses in healthcare \cite{white2012}. Taking advantage of proximity-based signals can speed the process of contact discovery and enable contact tracing of otherwise undiscoverable people like the fellow commuter on the train.  This can also be done with a third-party free approach providing similar privacy tradeoffs as manual contact tracing.  
 This functionality can enable someone who has become ill with symptoms consistent with COVID-19, or who has received confirmation of infection with a positive test for COVID-19, to voluntarily and under a pseudonym, share information that may be relevant to the wellness of others.  In particular, a system can manage, in a privacy-sensitive manner, data about individuals who came in close proximity to them over a period of time (e.g., the last two weeks), even if there is no personal connection between these individuals.
  Individuals who share information do so with disclosure and consent around potential risks of private information being shared.  We further discuss disclosure, security concerns, and re-identification risks in Section~\ref{sect:FAQ}.
  %This approach keeps \emph{all} pre-disclosure data on the phone except for pseudonymous identifiers broadcast to other local devices.
@@ -107,9 +105,7 @@ This functionality can enable someone who has become ill with symptoms consisten
 Importantly, these protocols, by default, keep \emph{all} personal data on a citizens' phones (aside for pseudonymous identifiers broadcast to other local devices), while enabling these key capabilities; information is shared via voluntary disclosure actions taken, with the understandings relayed via careful disclosure. For example, if someone never tests positive for COVID-19 or tests positive but decides not to use the system, then *NO* data is ever sent from their phone to any remote servers; such individuals
 would be contacted by standard contact tracing mechanisms arising from reportable disease rules. The data on the phone can be encrypted and can be set up to automatically time out based on end-user controlled policies.  This would prevent the dataset from being accessed or requested via legal subpoena or other governmental programs and policies. 
 
- We specify protocols for all three separate functionalities above, and each app designer can decide which ones to use.  These protocols notably have different value adoption curves: Narrowcast and Mobile-assisted contact tracing have a value which is linear in the average adoption rate while privacy-sensitive mobile tracing has value quadratic in the average adoption rate due to requiring both ends of the connection be working.  This quadratic dependence implies low initial value so we expect  Narrowcast and Mobile-assisted contact tracing to provide initial value in adoption while privacy-sensitive mobile tracing provides substantial additional value once adoption rates are high.
- 
- We note that there are an increasing number of concurrent contact tracing protocols being developed -- see in particular Section~\ref{sec:comparisons} for a discussion of solutions based on proximity based tracing (as in Figure~\ref{fig:bubble}).  In particular, there are multiple concurrent approaches using proximity based signaling; our approach has certain advantageous properties, as it is particularly simple and requires very little data transfer.
+ We specify protocols for all three separate functionalities above, and each app designer can decide which ones to use. We note that there are an increasing number of concurrent contact tracing protocols being developed -- see in particular Section~\ref{sec:comparisons} for a discussion of solutions based on proximity based tracing (as in Figure~\ref{fig:bubble}).  In particular, there are multiple concurrent approaches using proximity based signaling; our approach has certain advantageous properties, as it is particularly simple and requires very little data transfer.
  
 One point to emphasize is that, with this large number of emerging solutions, it is often difficult for the user to interpret what ``privacy preserving'' means in many of these protocols\footnote{In fact, due to re-identification risks, there is a strong case to be made that the terminology of ``privacy preserving'' is ill-suited to this context.}. One additional goal in providing the concrete protocols herein is to  have a broader discussion of both privacy-sensitivity and security, along with a transparent discussion of the associated re-identification risks ---  the act itself of alerting a user to being at risk provides de-anonymizing information, as we discuss shortly.  
 
@@ -303,7 +299,7 @@ Privacy and integrity properties of the protocol follow from the following two p
 \end{proposition}
 
 \begin{proposition}[One-wayness]
-   No attacker can produce a seed $S$ which generates a sequence of $\Delta$ IDs that include an unreported ID generated by an honest user (not controlled by the adversary) without compromising the security of $G$.
+   No attacker can produce a seed $S$ which generates a sequence of $\Delta$ IDs that include an unreported ID generated by a honest user (not controlled by the adversary) without compromising the security of $G$.
 \end{proposition}
 
 To discuss the consequences of these properties on privacy and integrity, let us refer to users as either ``positive'' or ``negative'' depending on whether they decided to report as positive, by uploading their seed to the server, or not. 
@@ -316,13 +312,13 @@ To discuss the consequences of these properties on privacy and integrity, let us
 {\bf Timing Information and Replay Attacks.} 
 The timestamping is necessary to prevent {\em replay attacks}. In particular, we are concerned by adversaries rebroadcasting IDs of legitimate users (to be tested positive) outside the range of their devices. This may create a high number of false exposures to be reported. 
 
-An attack we cannot prevent is the following: An attacker captures an ID of an honest user at location A, sends it over the Internet to location B, where it is re-broadcast.  However, as soon as there is sufficient delay, the attack is prevented by maintaining sufficiently accurate timing information. (One can envision several accuracy compromises in the implementation, which we do not discuss here.)
+An attack we cannot prevent is the following: An attacker captures an ID of a honest user at location A, sends it over the Internet to location B, where it is re-broadcast.  However, as soon as there is sufficient delay, the attack is prevented by maintaining sufficiently accurate timing information. (One can envision several accuracy compromises in the implementation, which we do not discuss here.)
 
 {\bf Strong Integrity.} Our integrity property does not prevent a malicious user from reporting a seed $\widetilde{S}^*$ generating an ID which has been already reported. Given an entry with seed $S^*$, the attacker just chooses (for example) $\widetilde{S}^*$ as the first half of $G(S^*)$. The threat of such attacks does not appear significant. However, they could be prevented with a less lightweight protocol, as we explain next. We refer to the resulting security guarantee as {\em strong integrity}. 
 
 Each user generates a signing/verification-key pair $(sk, vk)$ along with the initial seed. Then, we include $vk$ in the ID generation process, in particular let $(S_i, \id_i) \gets G(S_{i-1}, vk)$. An entry now consists of $(S^*, t_{start}, t_{end}, vk, \sigma)$, where $\sigma$ is a signature (with signing key $sk$) on $(S^*, t_{start}, t_{end}, vk)$. Entries with invalid signatures are ignored. (This imposes slightly stronger assumptions on $G$ -- pseudorandomness under related seeds sharing part of the input and binding of $vk$ to $S_i$.)
 
-The CEN protocol, discussed in Section~\ref{sec:comparisons}, is the only one that targets strong integrity, though their initial implementation failed to fully achieve it. (The issue has been fixed after our report.)
+We note that the CEN protocol discussed in Section~\ref{sec:comparisons} targets strong integrity, though their initial implementation fails to fully achieve it. 
 
 \subsubsection{Inference from Positive IDs} 
 
@@ -421,23 +417,23 @@ We will briefly discuss a few of these and how their mobile tracing protocols co
 The privacy-sensitive mobile tracing protocols proposed by
 \href{https://www.coepi.org/}{CoEpi}~\cite{coepi},
 \href{https://www.covid-watch.org/}{CovidWatch}~\cite{covidwatch},
-as well as $\mathrm{DP^3T}$~\cite{dp3t}, 
+and \href{https://www.pepp-pt.org/}{PEPP-PT}~\cite{pepppt}, 
 have a similar structure to our proposed protocol.
 We briefly describe the technical differences between all of these protocols and discuss the implications of these differences.
 
 Similar to our proposed protocol, these are based on producing pseudorandom IDs by iteratively applying a PRG $G$ to a seed.
 CoEpi and CovidWatch use the Contact Event Numbers (CEN) protocol, in which the initial seed is derived from a digital signature signing key $rak$ and $G$ is constructed from two hash functions (which during each iteration incorporate an encoding of the number of iterations done so far and the verification key $rvk$ which matches $rak$).
-Another proposal is the $\mathrm{DP^3T}$~\cite{dp3t} protocol, in which $G$ is constructed from a hash function, a PRF, and another PRG.
+Members of PEPP-PT proposed the $\mathrm{DP^3T}$\cite{dp3t} protocol, in which $G$ is constructed from a hash function, a PRF, and another PRG.
 The latter PRG is used so that a single iteration of $G$ produces all the IDs needed for a day.
 These IDs are used in a random order throughout the day.
 Both of these (under appropriate cryptographic assumptions) achieve the same sort of pseudorandomness and one-wayness properties as our protocol.
 
 The incorporation of $rvk$ into $G$ with CEN is intended to provide strong integrity and allow a reporting user to include a memo with their report that is cryptographically bound to the report. Two ideas for what such a memo might include are a summary of the user's self-reported symptoms (CoEpi) or an attestation from a third party verifying that the user tested positive (CovidWatch). Because a counter of how many times the seed has been updated is incorporated into $G$, a report must specify the corresponding counters. This leaks how long ago the user generated the initial seed, which could potentially be correlated with identifying information about the user (e.g., when they initially downloaded the app). 
 
-An earlier version of CEN incorrectly bound the digital signature key to the identifiers in a report.
+Currently (as of April 4th, 2020) there is an issue with how the digital signature key is bound to the identifiers in a report for the CEN protocol.
 Suppose an honest user has submitted a report for $id_{j}$ through $id_{j'}$ (for $j<j'$) with a user chosen memo. 
-Given this report, an attacker could create their own report that verifies as valid, but includes the honest user's $id_{i}$ for some $i$ between $j$ and $j'$ together with a memo of the attacker's choosing.
-A fix was proposed after we contacted the team behind the CEN protocol.
+Given this report, an attacker can create their own report that verifies as valid, but includes the honest user's $id_{i}$ for some $i$ between $j$ and $j'$ together with a memo of the attacker's choosing.
+We have contacted the team behind the CEN protocol -- pointing out this issue and proposing fixes.
 
 The random order of a user's IDs for a day by $\mathrm{DP^3T}$ is intended to make it difficult for an at risk individual to identify specifically when they were at risk (and thus potentially, by whom they were exposed).
 A protocol cannot hope to hide this sort of timing information from an attacker that chooses to record the time when they received every ID they see; this serves instead as a mitigation against a casual attacker using an app that does not store this sort of timing information.  
@@ -447,7 +443,7 @@ CEN does not use timing information to prevent replay attacks, but considers tha
 A similar protocol idea was presented in~\cite{BU}. 
 It differs from the aforementioned proposals in that 
 individual IDs are uploaded to the server, rather than a seed generating them (leading to increased bandwidth and storage).
-Alternatives using bloom filters to reduce storage are discussed, but these inherently decrease the reliability of the system. $\mathrm{DP^3T}$ also recently included a similar protocol as an additional option, using cuckoo filters in place of bloom filters.
+Alternatives using bloom filters to reduce storage are discussed, but these inherently decrease the reliability of the system.
 
 \subsection{Centralized Example}
 The \href{https://www.tracetogether.gov.sg/}{TraceTogether}~\cite{tracetogether} app is currently deployed in Singapore.
